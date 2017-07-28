@@ -26,5 +26,9 @@ module.exports = {
 			filename: 'index.html',
 			inject: 'body'
 		})
-	]
+	],
+	devServer: {
+		port: 9000,
+		historyApiFallback: true
+	}
 }
