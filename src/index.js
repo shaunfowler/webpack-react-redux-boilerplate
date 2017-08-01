@@ -1,6 +1,6 @@
-import React from 'react'
-import {render} from 'react-dom'
-import {BrowserRouter} from 'react-router-dom'
+import React from 'react';
+import {render} from 'react-dom';
+import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import configureStore from './store/configureStore';
 import App from './components/App';
@@ -13,4 +13,4 @@ render((
             <App/>
         </BrowserRouter>
     </Provider>
-), document.getElementById('root'))
+), document.getElementById('root'));

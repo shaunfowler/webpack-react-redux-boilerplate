@@ -1,16 +1,16 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import * as itemActions from '../actions/itemActions';
 
 class Home extends React.Component {
-
     constructor(state) {
         super(state);
         this.state = {
             item: {
                 name: ''
             }
-        }
+        };
 
         this.onItemNameChange = this.onItemNameChange.bind(this);
         this.onAddItem = this.onAddItem.bind(this);
@@ -23,12 +23,12 @@ class Home extends React.Component {
     }
 
     onAddItem() {
-        this.props.dispatch(itemActions.createItem(this.state.item));
+        this.props.createItem(this.state.item);
         this.setState({
             item: {
                 name: ''
             }
-        })
+        });
     }
 
     itemRow(item, index) {
@@ -42,14 +42,15 @@ class Home extends React.Component {
             <div>
                 <h1>Home</h1>
 
-                <h2>Items</h2>
+                <p>
+                    <input type='text' onChange={this.onItemNameChange} placeholder='Item name' value={this.state.item.name}/>
+                    <button onClick={this.onAddItem}>Add</button>
+                </p>
 
-                <h3>Add item</h3>
-                <input type="text" onChange={this.onItemNameChange} value={this.state.item.name}/>
-                <button onClick={this.onAddItem}>Add</button>
+                {this.props.items.length === 0
+                    ? <div><i>No items</i></div>
+                    : ''}
 
-                <h3>Existing items</h3>
-                {this.props.items.length === 0 ? <div>No items</div> : ''}
                 <ul>
                     {this.props.items.map(this.itemRow)}
                 </ul>
@@ -58,8 +59,19 @@ class Home extends React.Component {
     }
 }
 
-function mapStateToProps(state, ownProps) {
+Home.propTypes = {
+    items: PropTypes.array.isRequired,
+    createItem: PropTypes.func.isRequired
+};
+
+function mapStateToProps(state) {
     return {items: state.items};
 }
 
-export default connect(mapStateToProps)(Home);
+function mapDispatchToProps(dispatch) {
+    return {
+        createItem: item => dispatch(itemActions.createItem(item))
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
