@@ -1,3 +1,5 @@
+import * as types from './actionTypes';
+
 export function createItem(item) {
-    return {type: 'CREATE_ITEM', item};
+    return {type: types.CREATE_ITEM, item};
 }
